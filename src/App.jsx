@@ -15,12 +15,24 @@ export default function App() {
         getData();
     }, []);
 
+    const addCommentHandler = (newComment) => {
+        setComments([...comments, newComment]);
+    };
+
     return (
-        <div className='antialiased min-h-screen flex flex-col justify-center items-center gap-5 py-8 bg-very-light-gray'>
+        <main className='antialiased min-h-screen flex flex-col justify-center items-center gap-5 py-8 bg-very-light-gray'>
             {comments.map((comment) => (
-                <Comment key={comment.id} comment={comment} />
+                <Comment
+                    key={comment.id}
+                    data={comment}
+                    addCommentHandler={addCommentHandler}
+                />
             ))}
-            <AddComment />
-        </div>
+            <AddComment
+                replyingTo=''
+                addCommentHandler={addCommentHandler}
+                width='w-[90%] md:w-[740px]'
+            />
+        </main>
     );
 }

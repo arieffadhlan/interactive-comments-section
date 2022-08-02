@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CommentContext } from '../../context/CommentContext';
 import { ReactComponent as IconReply } from '../../assets/icons/icon-reply.svg';
+import { ReactComponent as IconEdit } from '../../assets/icons/icon-edit.svg';
+import { ReactComponent as IconDelete } from '../../assets/icons/icon-delete.svg';
 
-export default function CardBody({ data }) {
+export default function CardBody({ data, showAddReply, setShowAddReply }) {
     const { user } = data;
+
+    const showAddComment = () => {
+        showAddReply === data.id
+            ? setShowAddReply(null)
+            : setShowAddReply(data.id);
+    };
 
     return (
         <div className='flex flex-col w-full gap-4'>
@@ -18,11 +27,27 @@ export default function CardBody({ data }) {
                     </span>
                     <span className='text-grayish-blue'>{data.createdAt}</span>
                 </div>
-                <div>
-                    <button className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'>
-                        <IconReply />
-                        Reply
-                    </button>
+                <div className='flex items-center gap-6'>
+                    {user.username === 'juliusomo' ? (
+                        <>
+                            <button className='flex items-center gap-2 border-0 font-medium text-soft-red bg-transparent'>
+                                <IconDelete />
+                                Delete
+                            </button>
+                            <button className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'>
+                                <IconEdit />
+                                Edit
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={showAddComment}
+                            className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'
+                        >
+                            <IconReply />
+                            Reply
+                        </button>
+                    )}
                 </div>
             </div>
             <p className='break-words text-base text-grayish-blue'>
