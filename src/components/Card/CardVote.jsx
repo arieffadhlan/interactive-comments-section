@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { ReactComponent as IconPlus } from '../../assets/icons/icon-plus.svg';
 import { ReactComponent as IconMinus } from '../../assets/icons/icon-minus.svg';
 
-export default function CardVote({ comment }) {
-    const [score, setScore] = useState(comment.score);
+export default function CardVote({ data }) {
+    const [score, setScore] = useState(data.score);
 
     const upVote = () => {
-        if (score > comment.score) return;
+        if (score > data.score) return;
         return setScore((prevScore) => prevScore + 1);
     };
 
     const downVote = () => {
-        if (score < comment.score) return;
+        if (score < data.score) return;
         return setScore((prevScore) => prevScore - 1);
     };
 

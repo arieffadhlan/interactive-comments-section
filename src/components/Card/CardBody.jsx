@@ -1,8 +1,8 @@
 import React from 'react';
 import { ReactComponent as IconReply } from '../../assets/icons/icon-reply.svg';
 
-export default function CardBody({ comment }) {
-    const { user } = comment;
+export default function CardBody({ data }) {
+    const { user } = data;
 
     return (
         <div className='flex flex-col w-full gap-4'>
@@ -16,9 +16,7 @@ export default function CardBody({ comment }) {
                     <span className='font-medium text-dark-blue'>
                         {user.username}
                     </span>
-                    <span className='text-grayish-blue'>
-                        {comment.createdAt}
-                    </span>
+                    <span className='text-grayish-blue'>{data.createdAt}</span>
                 </div>
                 <div>
                     <button className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'>
@@ -28,7 +26,12 @@ export default function CardBody({ comment }) {
                 </div>
             </div>
             <p className='break-words text-base text-grayish-blue'>
-                {comment.content}
+                {typeof data.replyingTo !== 'undefined' && (
+                    <span className='mr-1 font-medium text-moderate-blue'>
+                        @{user.username}
+                    </span>
+                )}
+                {data.content}
             </p>
         </div>
     );

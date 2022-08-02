@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Card from './components/Card/Card';
+import Comment from './components/Comment';
 
 export default function App() {
     const [comments, setComments] = useState([]);
@@ -15,9 +15,9 @@ export default function App() {
     }, []);
 
     return (
-        <div className='min-h-screen flex flex-col justify-center items-center gap-4 py-8 bg-very-light-gray'>
+        <div className='min-h-screen flex flex-col justify-center items-center gap-5 py-8 bg-very-light-gray'>
             {comments.map((comment) => (
-                <Card key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} />
             ))}
         </div>
     );
