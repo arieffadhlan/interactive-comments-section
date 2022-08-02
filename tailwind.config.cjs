@@ -3,16 +3,6 @@ module.exports = {
     content: ['./src/**/*.{js,jsx}'],
     theme: {
         extend: {
-            backgroundImage: {
-                amyrobson:
-                    "url('./src/assets/images/avatars/image-amyrobson.png')",
-                juliusomo:
-                    "url('./src/assets/images/avatars/image-juliusomo.png')",
-                maxblagun:
-                    "url('./src/assets/images/avatars/image-maxblagun.png')",
-                ramsesmiron:
-                    "url('./src/assets/images/avatars/image-ramsesmiron.png')",
-            },
             colors: {
                 'moderate-blue': 'hsl(238, 40%, 52%)',
                 'soft-red': 'hsl(358, 79%, 66%)',
