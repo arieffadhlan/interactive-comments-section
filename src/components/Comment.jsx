@@ -4,8 +4,14 @@ import CardBody from './Card/CardBody';
 import CardVote from './Card/CardVote';
 import Reply from './Reply';
 
-export default function Comment({ data, addCommentHandler }) {
-    const [showAddReply, setShowAddReply] = useState(null);
+export default function Comment({ data, addNewComment }) {
+    const [replying, setReplying] = useState(null);
+
+    const addReply = (newReply) => {
+        const replies = [...data.replies, newReply];
+        addNewComment(replies, data.id);
+        setReplying(null);
+    };
 
     return (
         <div className='flex flex-col gap-5 w-[90%] md:w-[740px]'>
@@ -13,18 +19,18 @@ export default function Comment({ data, addCommentHandler }) {
                 <CardVote data={data} />
                 <CardBody
                     data={data}
-                    showAddReply={showAddReply}
-                    setShowAddReply={setShowAddReply}
+                    replying={replying}
+                    setReplying={setReplying}
                 />
             </div>
-            {showAddReply && (
+            {replying && (
                 <AddComment
+                    replying={replying}
                     replyingTo={data.user.username}
-                    addCommentHandler={addCommentHandler}
-                    width='full'
+                    addNewComment={addReply}
                 />
             )}
-            <Reply data={data} />
+            <Reply data={data} addNewComment={addReply} />
         </div>
     );
 }

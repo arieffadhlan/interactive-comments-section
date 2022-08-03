@@ -15,8 +15,16 @@ export default function App() {
         getData();
     }, []);
 
-    const addCommentHandler = (newComment) => {
+    const addNewComment = (newComment) => {
         setComments([...comments, newComment]);
+    };
+
+    const addNewReply = (replies, commentId) => {
+        comments.map((comment) => {
+            if (comment.id === commentId) {
+                comment.replies = [...replies];
+            }
+        });
     };
 
     return (
@@ -25,14 +33,10 @@ export default function App() {
                 <Comment
                     key={comment.id}
                     data={comment}
-                    addCommentHandler={addCommentHandler}
+                    addNewComment={addNewReply}
                 />
             ))}
-            <AddComment
-                replyingTo=''
-                addCommentHandler={addCommentHandler}
-                width='w-[90%] md:w-[740px]'
-            />
+            <AddComment replyingTo='' addNewComment={addNewComment} />
         </main>
     );
 }
