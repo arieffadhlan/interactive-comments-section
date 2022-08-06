@@ -1,36 +1,43 @@
 import React, { useState } from 'react';
 import AddComment from './AddComment';
 import CardBody from './Card/CardBody';
+import CardHeader from './Card/CardHeader';
 import CardVote from './Card/CardVote';
 import Reply from './Reply';
 
-export default function Comment({ data, addNewComment }) {
+export default function Comment({ comment }) {
     const [replying, setReplying] = useState(null);
-
-    const addReply = (newReply) => {
-        const replies = [...data.replies, newReply];
-        addNewComment(replies, data.id);
-        setReplying(null);
-    };
+    const [editing, setEditing] = useState(null);
 
     return (
         <div className='flex flex-col gap-5 w-[90%] md:w-[740px]'>
             <div className='flex gap-4 p-7 rounded-xl bg-white'>
-                <CardVote data={data} />
-                <CardBody
-                    data={data}
-                    replying={replying}
-                    setReplying={setReplying}
-                />
+                <CardVote comment={comment} />
+                <div className='flex flex-col w-full gap-4'>
+                    <CardHeader
+                        comment={comment}
+                        replying={replying}
+                        setReplying={setReplying}
+                        editing={editing}
+                        setEditing={setEditing}
+                    />
+                    <CardBody
+                        type='comment'
+                        comment={comment}
+                        editing={editing}
+                        setEditing={setEditing}
+                    />
+                </div>
             </div>
             {replying && (
                 <AddComment
-                    replying={replying}
-                    replyingTo={data.user.username}
-                    addNewComment={addReply}
+                    type='reply'
+                    comment={comment}
+                    setReplying={setReplying}
+                    replyingTo={comment.user.username}
                 />
             )}
-            <Reply data={data} addNewComment={addReply} />
+            <Reply comment={comment} />
         </div>
     );
 }

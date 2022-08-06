@@ -1,17 +1,21 @@
-import React from 'react';
-import { ReactComponent as IconReply } from '../../assets/icons/icon-reply.svg';
-import { ReactComponent as IconEdit } from '../../assets/icons/icon-edit.svg';
-import { ReactComponent as IconDelete } from '../../assets/icons/icon-delete.svg';
+import React, { useContext, useState } from 'react';
+import { CommentContext } from '../../context/CommentContext';
 
-export default function CardBody({ data, replying, setReplying }) {
-    const { user } = data;
+export default function CardBody({ type, comment, editing, setEditing }) {
+    const [content, setContent] = useState(comment.content);
+    const commentCtx = useContext(CommentContext);
 
-    const showAddComment = () => {
-        replying === data.id ? setReplying(null) : setReplying(data.id);
+    const editComment = () => {
+        if (type === 'comment') {
+            commentCtx.editComment(content, comment.id);
+        } else if (type === 'reply') {
+            commentCtx.editReply(content, comment.id);
+        }
+        setEditing(null);
     };
 
     const commentContent = () => {
-        const splitContent = data.content.split(' ');
+        const splitContent = comment.content.split(' ');
         const tag = splitContent.shift();
         const content = splitContent.join(' ');
 
@@ -23,56 +27,32 @@ export default function CardBody({ data, replying, setReplying }) {
                 {content}
             </>
         ) : (
-            <>
-                <span className='mr-1 font-medium text-moderate-blue'>
-                    @{user.username}
-                </span>
-                {data.content}
-            </>
+            <>{comment.content}</>
         );
     };
-    commentContent();
 
     return (
-        <div className='flex flex-col w-full gap-4'>
-            <div className='flex justify-between'>
-                <div className='flex items-center gap-4'>
-                    <img
-                        src={`./src/assets/images/avatars/image-${user.username}.webp`}
-                        alt={user.username}
-                        className='w-8 h-8 rounded-full bg-cover'
+        <>
+            {editing === comment.id ? (
+                <>
+                    <textarea
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder='Add a comment...'
+                        className='placeholder:text-grayish-blue resize-none w-full h-[100px] py-3 px-5 rounded-xl border border-solid border-light-gray text-grayish-blue transition delay-50 ease-in focus:outline-none focus:border-grayish-blue'
                     />
-                    <span className='font-medium text-dark-blue'>
-                        {user.username}
-                    </span>
-                    <span className='text-grayish-blue'>{data.createdAt}</span>
-                </div>
-                <div className='flex items-center gap-6'>
-                    {user.username === 'juliusomo' ? (
-                        <>
-                            <button className='flex items-center gap-2 border-0 font-medium text-soft-red bg-transparent'>
-                                <IconDelete />
-                                Delete
-                            </button>
-                            <button className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'>
-                                <IconEdit />
-                                Edit
-                            </button>
-                        </>
-                    ) : (
-                        <button
-                            onClick={showAddComment}
-                            className='flex items-center gap-2 border-0 font-medium text-moderate-blue bg-transparent'
-                        >
-                            <IconReply />
-                            Reply
-                        </button>
-                    )}
-                </div>
-            </div>
-            <p className='break-words text-base text-grayish-blue'>
-                {commentContent()}
-            </p>
-        </div>
+                    <button
+                        onClick={editComment}
+                        className='self-end py-3 px-8 rounded-lg border-0 bg-moderate-blue uppercase font-medium text-white transition delay-50 hover:opacity-90 active:opacity-80'
+                    >
+                        Update
+                    </button>
+                </>
+            ) : (
+                <p className='break-words text-base text-grayish-blue'>
+                    {commentContent()}
+                </p>
+            )}
+        </>
     );
 }

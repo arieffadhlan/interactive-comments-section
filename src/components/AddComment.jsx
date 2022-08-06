@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
+import { CommentContext } from '../context/CommentContext';
 import currentUser from '../assets/images/avatars/image-juliusomo.webp';
 
-export default function AddComment({ replyingTo, addNewComment }) {
-    const [commentText, setCommentText] = useState('');
+export default function AddComment({
+    type,
+    comment,
+    setReplying,
+    replyingTo = '',
+}) {
+    const [content, setContent] = useState('');
+    const commentCtx = useContext(CommentContext);
+
     const replyTag = replyingTo !== '' ? `@${replyingTo}` : '';
 
-    const onChangeHandler = (e) => setCommentText(e.target.value);
-
     const commentHandler = () => {
-        if (commentText === '') return;
-        const newComment = {
+        if (content === '') return;
+        const data = {
             id: +new Date(),
-            content: `${replyTag} ${commentText}`,
+            content: `${replyTag} ${content}`,
             createdAt: '1 minute ago',
             score: 0,
             user: {
@@ -24,8 +30,15 @@ export default function AddComment({ replyingTo, addNewComment }) {
             },
             replies: [],
         };
-        addNewComment(newComment);
-        setCommentText('');
+
+        if (type === 'comment') {
+            commentCtx.addComment(data);
+            setContent('');
+        } else if (type === 'reply') {
+            commentCtx.addReply([...comment.replies, data], comment.id);
+            setContent('');
+            setReplying(null);
+        }
     };
 
     return (
@@ -41,8 +54,8 @@ export default function AddComment({ replyingTo, addNewComment }) {
                 className='w-9 h-9 rounded-full'
             />
             <textarea
-                value={commentText}
-                onChange={onChangeHandler}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
                 placeholder='Add a comment...'
                 className='placeholder:text-grayish-blue resize-none w-full h-[100px] py-3 px-5 rounded-xl border border-solid border-light-gray text-grayish-blue transition delay-50 ease-in focus:outline-none focus:border-grayish-blue'
             />
