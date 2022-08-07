@@ -16,7 +16,7 @@ export default function CardVote({ comment }) {
     };
 
     return (
-        <div className='h-max flex flex-col justify-center items-center gap-2 p-3 rounded-xl bg-very-light-gray'>
+        <div className='h-max flex flex-row justify-center items-center gap-3 p-2 rounded-xl bg-very-light-gray md:flex-col'>
             <button
                 onClick={upVote}
                 className='w-5 h-5 flex justify-center items-center border-0 bg-transparent'

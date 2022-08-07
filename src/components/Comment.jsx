@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AddComment from './AddComment';
 import CardBody from './Card/CardBody';
+import CardFooter from './Card/CardFooter';
 import CardHeader from './Card/CardHeader';
 import CardVote from './Card/CardVote';
 import Modal from './Modal';
@@ -12,8 +13,10 @@ export default function Comment({ comment }) {
 
     return (
         <div className='flex flex-col gap-5 w-[90%] md:w-[740px]'>
-            <div className='flex gap-4 p-7 rounded-xl bg-white'>
-                <CardVote comment={comment} />
+            <div className='flex gap-6 p-5 rounded-xl bg-white md:p-7'>
+                <div className='hidden md:flex'>
+                    <CardVote comment={comment} />
+                </div>
                 <div className='flex flex-col w-full gap-4'>
                     <CardHeader
                         comment={comment}
@@ -25,6 +28,13 @@ export default function Comment({ comment }) {
                     <CardBody
                         type='comment'
                         comment={comment}
+                        editing={editing}
+                        setEditing={setEditing}
+                    />
+                    <CardFooter
+                        comment={comment}
+                        replying={replying}
+                        setReplying={setReplying}
                         editing={editing}
                         setEditing={setEditing}
                     />

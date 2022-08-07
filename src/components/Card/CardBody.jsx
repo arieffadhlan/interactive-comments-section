@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { CommentContext } from '../../contexts/CommentContext';
 
-export default function CardBody({ type, comment, editing, setEditing }) {
+export default function CardBody({
+    type,
+    comment,
+    replyingTo = '',
+    editing,
+    setEditing,
+}) {
     const [content, setContent] = useState(comment.content);
     const commentCtx = useContext(CommentContext);
 
@@ -12,23 +18,6 @@ export default function CardBody({ type, comment, editing, setEditing }) {
             commentCtx.editReply(content, comment.id);
         }
         setEditing(null);
-    };
-
-    const commentContent = () => {
-        const splitContent = comment.content.split(' ');
-        const tag = splitContent.shift();
-        const content = splitContent.join(' ');
-
-        return tag.charAt(0) === '@' ? (
-            <>
-                <span className='mr-1 font-medium text-moderate-blue'>
-                    {tag}
-                </span>
-                {content}
-            </>
-        ) : (
-            <>{comment.content}</>
-        );
     };
 
     return (
@@ -50,7 +39,16 @@ export default function CardBody({ type, comment, editing, setEditing }) {
                 </>
             ) : (
                 <p className='break-words text-base text-grayish-blue'>
-                    {commentContent()}
+                    {replyingTo !== '' ? (
+                        <>
+                            <span className='mr-1 font-medium text-moderate-blue'>
+                                {replyingTo}
+                            </span>
+                            {comment.content}
+                        </>
+                    ) : (
+                        <>{comment.content}</>
+                    )}
                 </p>
             )}
         </>

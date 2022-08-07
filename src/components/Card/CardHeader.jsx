@@ -23,13 +23,15 @@ export default function CardHeader({
                 </span>
                 <span className='text-grayish-blue'>{comment.createdAt}</span>
             </div>
-            <CardButton
-                comment={comment}
-                replying={replying}
-                setReplying={setReplying}
-                editing={editing}
-                setEditing={setEditing}
-            />
+            <div className='hidden md:flex'>
+                <CardButton
+                    comment={comment}
+                    replying={replying}
+                    setReplying={setReplying}
+                    editing={editing}
+                    setEditing={setEditing}
+                />
+            </div>
         </div>
     );
 }
