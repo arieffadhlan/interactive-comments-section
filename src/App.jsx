@@ -1,11 +1,14 @@
 import React from 'react';
-import CommentProvider from './context/CommentContext';
+import CommentProvider from './contexts/CommentContext';
+import ModalProvider from './contexts/ModalContext';
 import Layout from './components/Layout';
 
 export default function App() {
     return (
-        <CommentProvider>
-            <Layout />
-        </CommentProvider>
+        <ModalProvider>
+            <CommentProvider>
+                <Layout />
+            </CommentProvider>
+        </ModalProvider>
     );
 }

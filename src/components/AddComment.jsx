@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
-import { CommentContext } from '../context/CommentContext';
+import { CommentContext } from '../contexts/CommentContext';
 import currentUser from '../assets/images/avatars/image-juliusomo.webp';
 
 export default function AddComment({
@@ -62,7 +62,7 @@ export default function AddComment({
             <div>
                 <button
                     onClick={commentHandler}
-                    className='py-3 px-8 rounded-lg border-0 bg-moderate-blue uppercase font-medium text-white transition delay-50 hover:opacity-90 active:opacity-80'
+                    className='py-3 px-8 rounded-lg border-0 bg-moderate-blue uppercase font-medium text-white transition hover:opacity-90 active:opacity-80'
                 >
                     {replyingTo === '' ? 'Send' : 'Reply'}
                 </button>

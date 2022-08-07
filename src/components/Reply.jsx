@@ -3,6 +3,7 @@ import AddComment from './AddComment';
 import CardBody from './Card/CardBody';
 import CardHeader from './Card/CardHeader';
 import CardVote from './Card/CardVote';
+import Modal from './Modal';
 
 export default function Reply2({ comment }) {
     const [replying, setReplying] = useState(null);
@@ -43,6 +44,7 @@ export default function Reply2({ comment }) {
                                     replyingTo={reply.user.username}
                                 />
                             )}
+                            <Modal type='reply' id={reply.id} />
                         </div>
                     ))}
                 </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { CommentContext } from '../../context/CommentContext';
+import { CommentContext } from '../../contexts/CommentContext';
 
 export default function CardBody({ type, comment, editing, setEditing }) {
     const [content, setContent] = useState(comment.content);

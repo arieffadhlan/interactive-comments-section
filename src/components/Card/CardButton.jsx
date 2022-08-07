@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ReactComponent as IconReply } from '../../assets/icons/icon-reply.svg';
 import { ReactComponent as IconEdit } from '../../assets/icons/icon-edit.svg';
 import { ReactComponent as IconDelete } from '../../assets/icons/icon-delete.svg';
+import { ModalContext } from '../../contexts/ModalContext';
 
 export default function CardButton({
     comment,
@@ -10,6 +11,7 @@ export default function CardButton({
     editing,
     setEditing,
 }) {
+    const modalCtx = useContext(ModalContext);
     const { user } = comment;
 
     const showAddComment = () => {
@@ -20,11 +22,18 @@ export default function CardButton({
         editing === comment.id ? setEditing(null) : setEditing(comment.id);
     };
 
+    const showDeleteModal = () => {
+        modalCtx.openModal(comment.id);
+    };
+
     return (
         <div className='flex items-center gap-6'>
             {user.username === 'juliusomo' ? (
                 <>
-                    <button className='flex items-center gap-2 border-0 font-medium text-soft-red bg-transparent'>
+                    <button
+                        onClick={showDeleteModal}
+                        className='flex items-center gap-2 border-0 font-medium text-soft-red bg-transparent'
+                    >
                         <IconDelete />
                         Delete
                     </button>

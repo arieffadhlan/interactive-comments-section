@@ -37,6 +37,13 @@ const CommentReducer = (state, action) => {
                 }
             });
             return { ...state };
+        case commentActions.DELETE_COMMENT:
+            return {
+                ...state,
+                comments: state.comments.filter(
+                    (comment) => comment.id !== action.payload.commentId
+                ),
+            };
         case replyActions.ADD_REPLY:
             state.comments.map((comment) => {
                 if (comment.id === action.payload.commentId) {
@@ -51,6 +58,13 @@ const CommentReducer = (state, action) => {
                         reply.content = action.payload.content;
                     }
                 });
+            });
+            return { ...state };
+        case replyActions.DELETE_REPLY:
+            state.comments.map((comment) => {
+                comment.replies = comment.replies.filter(
+                    (reply) => reply.id !== action.payload.replyId
+                );
             });
             return { ...state };
         default:
@@ -89,6 +103,13 @@ export const CommentProvider = ({ children }) => {
         });
     };
 
+    const deleteComment = (commentId) => {
+        dispatch({
+            type: commentActions.DELETE_COMMENT,
+            payload: { commentId },
+        });
+    };
+
     const addReply = (replies, commentId) => {
         dispatch({
             type: replyActions.ADD_REPLY,
@@ -103,14 +124,23 @@ export const CommentProvider = ({ children }) => {
         });
     };
 
+    const deleteReply = (replyId) => {
+        dispatch({
+            type: replyActions.DELETE_REPLY,
+            payload: { replyId },
+        });
+    };
+
     return (
         <CommentContext.Provider
             value={{
                 ...state,
                 addComment,
                 editComment,
+                deleteComment,
                 addReply,
                 editReply,
+                deleteReply,
             }}
         >
             {children}

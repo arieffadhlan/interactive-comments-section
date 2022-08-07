@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { CommentContext } from '../context/CommentContext';
+import { CommentContext } from '../contexts/CommentContext';
 import AddComment from './AddComment';
 import Comment from './Comment';
 

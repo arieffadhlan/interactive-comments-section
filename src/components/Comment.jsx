@@ -3,6 +3,7 @@ import AddComment from './AddComment';
 import CardBody from './Card/CardBody';
 import CardHeader from './Card/CardHeader';
 import CardVote from './Card/CardVote';
+import Modal from './Modal';
 import Reply from './Reply';
 
 export default function Comment({ comment }) {
@@ -38,6 +39,7 @@ export default function Comment({ comment }) {
                 />
             )}
             <Reply comment={comment} />
+            <Modal type='comment' id={comment.id} />
         </div>
     );
 }
