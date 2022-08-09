@@ -1,17 +1,9 @@
-import { createContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 
-const initialCommentState = {
-    currentUser: {
-        image: {
-            png: './images/avatars/image-juliusomo.png',
-            webp: './images/avatars/image-juliusomo.webp',
-        },
-        username: 'juliusomo',
-    },
-    comments: [],
-};
+const initialCommentState = [];
 
 const commentActions = {
+    SET_COMMENT: 'SET_COMMENT',
     ADD_COMMENT: 'ADD_COMMENT',
     EDIT_COMMENT: 'EDIT_COMMENT',
     DELETE_COMMENT: 'DELETE_COMMENT',
@@ -25,69 +17,81 @@ const replyActions = {
 
 const CommentReducer = (state, action) => {
     switch (action.type) {
+        case commentActions.SET_COMMENT:
+            return action.payload;
         case commentActions.ADD_COMMENT:
-            return {
-                ...state,
-                comments: [...state.comments, action.payload.newComment],
-            };
+            return [...state, action.payload.newComment];
         case commentActions.EDIT_COMMENT:
-            state.comments.map((comment) => {
+            state.map((comment) => {
                 if (comment.id === action.payload.commentId) {
                     comment.content = action.payload.content;
                 }
             });
-            return { ...state };
+            return [...state];
         case commentActions.DELETE_COMMENT:
-            return {
-                ...state,
-                comments: state.comments.filter(
-                    (comment) => comment.id !== action.payload.commentId
-                ),
-            };
+            return state.filter(
+                (comment) => comment.id !== action.payload.commentId
+            );
         case replyActions.ADD_REPLY:
-            state.comments.map((comment) => {
+            state.map((comment) => {
                 if (comment.id === action.payload.commentId) {
                     comment.replies = [...action.payload.replies];
                 }
             });
-            return { ...state };
+            return [...state];
         case replyActions.EDIT_REPLY:
-            state.comments.map((comment) => {
+            state.map((comment) => {
                 comment.replies.map((reply) => {
                     if (reply.id === action.payload.replyId) {
                         reply.content = action.payload.content;
                     }
                 });
             });
-            return { ...state };
+            return [...state];
         case replyActions.DELETE_REPLY:
-            state.comments.map((comment) => {
+            state.map((comment) => {
                 comment.replies = comment.replies.filter(
                     (reply) => reply.id !== action.payload.replyId
                 );
             });
-            return { ...state };
+            return [...state];
         default:
-            break;
+            return [...state];
     }
 };
 
 export const CommentContext = createContext();
 
 export const CommentProvider = ({ children }) => {
-    const [comments, setComments] = useState([]);
-    const [state, dispatch] = useReducer(CommentReducer, initialCommentState);
+    const [comments, dispatch] = useReducer(
+        CommentReducer,
+        initialCommentState
+    );
 
     const getData = async () => {
         const res = await fetch('./data/data.json');
         const data = await res.json();
-        setComments(data.comments);
-        initialCommentState.comments = data.comments;
+        const comments = data.comments;
+        dispatch({
+            type: commentActions.SET_COMMENT,
+            payload: [...comments],
+        });
     };
 
     useEffect(() => {
-        getData();
+        if (localStorage.getItem('comments') !== null) {
+            dispatch({
+                type: commentActions.SET_COMMENT,
+                payload: JSON.parse(localStorage.getItem('comments')),
+            });
+        } else {
+            getData();
+        }
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }, [comments]);
 
     const addComment = (newComment) => {
         dispatch({
@@ -134,7 +138,7 @@ export const CommentProvider = ({ children }) => {
     return (
         <CommentContext.Provider
             value={{
-                ...state,
+                comments,
                 addComment,
                 editComment,
                 deleteComment,

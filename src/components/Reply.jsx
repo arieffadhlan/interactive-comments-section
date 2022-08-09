@@ -10,8 +10,6 @@ export default function Reply({ comment }) {
     const [replying, setReplying] = useState(null);
     const [editing, setEditing] = useState(null);
 
-    console.log(replying);
-
     return (
         <>
             {comment.replies.length >= 1 && (
