@@ -40,9 +40,16 @@ export default function CardHeader({
         <div className='flex justify-between'>
             <div className='flex items-center gap-4'>
                 {profilePicture()}
-                <span className='font-medium text-dark-blue'>
-                    {user.username}
-                </span>
+                <div className='flex items-center gap-2'>
+                    <span className='font-medium text-dark-blue'>
+                        {user.username}
+                    </span>
+                    {user.username === 'juliusomo' && (
+                        <span className='px-2.5 rounded-md bg-moderate-blue text-white-color'>
+                            you
+                        </span>
+                    )}
+                </div>
                 {comment.createdAt.slice(-3) === 'ago' ? (
                     <span className='text-grayish-blue'>
                         {comment.createdAt}
