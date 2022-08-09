@@ -12,8 +12,6 @@ export default function AddComment({
     const [content, setContent] = useState('');
     const commentCtx = useContext(CommentContext);
 
-    // const replyTag = replyingTo !== '' ? `@${replyingTo}` : '';
-
     const commentHandler = () => {
         if (content === '') return;
 
@@ -21,7 +19,7 @@ export default function AddComment({
             const commentData = {
                 id: +new Date(),
                 content: `${content}`,
-                createdAt: '1 minute ago',
+                createdAt: `${new Date()}`,
                 score: 0,
                 user: {
                     image: {
@@ -38,7 +36,7 @@ export default function AddComment({
             const replyData = {
                 id: +new Date(),
                 content: `${content}`,
-                createdAt: '1 minute ago',
+                createdAt: `${new Date()}`,
                 score: 0,
                 replyingTo: `${replyingTo}`,
                 user: {

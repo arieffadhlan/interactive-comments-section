@@ -1,4 +1,5 @@
 import React from 'react';
+import TimeAgo from 'timeago-react';
 import CardButton from './CardButton';
 
 export default function CardHeader({
@@ -21,7 +22,17 @@ export default function CardHeader({
                 <span className='font-medium text-dark-blue'>
                     {user.username}
                 </span>
-                <span className='text-grayish-blue'>{comment.createdAt}</span>
+                {comment.createdAt.slice(-3) === 'ago' ? (
+                    <span className='text-grayish-blue'>
+                        {comment.createdAt}
+                    </span>
+                ) : (
+                    <TimeAgo
+                        className='text-grayish-blue'
+                        datetime={comment.createdAt + 1000 * 11}
+                        live={false}
+                    />
+                )}
             </div>
             <div className='hidden md:flex'>
                 <CardButton
