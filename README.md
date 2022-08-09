@@ -7,8 +7,7 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
 -   [Overview](#overview)
     -   [Screenshot](#screenshot)
     -   [The challenge](#the-challenge)
--   [My process](#my-process)
-    -   [Built with](#built-with)
+-   [Built with](#built-with)
 -   [Author](#author)
 
 ## Overview
