@@ -1,6 +1,9 @@
 import React from 'react';
 import TimeAgo from 'timeago-react';
 import CardButton from './CardButton';
+import amyrobson from '../../assets/images/avatars/image-amyrobson.webp';
+import maxblagun from '../../assets/images/avatars/image-maxblagun.webp';
+import ramsesmiron from '../../assets/images/avatars/image-ramsesmiron.webp';
 
 export default function CardHeader({
     comment,
@@ -11,14 +14,29 @@ export default function CardHeader({
 }) {
     const { user } = comment;
 
+    const profilePicture = () => {
+        let profilePic = null;
+        if (user.username === 'amyrobson') {
+            profilePic = amyrobson;
+        } else if (user.username === 'maxblagun') {
+            profilePic = maxblagun;
+        } else if (user.username === 'ramsesmiron') {
+            profilePic = ramsesmiron;
+        }
+
+        return (
+            <img
+                src={profilePic}
+                alt={user.username}
+                className='w-8 h-8 rounded-full bg-cover'
+            />
+        );
+    };
+
     return (
         <div className='flex justify-between'>
             <div className='flex items-center gap-4'>
-                <img
-                    src={`./src/assets/images/avatars/image-${user.username}.webp`}
-                    alt={user.username}
-                    className='w-8 h-8 rounded-full bg-cover'
-                />
+                {profilePicture()}
                 <span className='font-medium text-dark-blue'>
                     {user.username}
                 </span>
