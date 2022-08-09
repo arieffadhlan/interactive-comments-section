@@ -5,12 +5,17 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
 ## Table of contents
 
 -   [Overview](#overview)
+    -   [Screenshot](#screenshot)
     -   [The challenge](#the-challenge)
 -   [My process](#my-process)
     -   [Built with](#built-with)
 -   [Author](#author)
 
 ## Overview
+
+### Screenshot
+
+![](./src/assets/images/screenshot.png)
 
 ### The challenge
 
@@ -23,12 +28,9 @@ Users should be able to:
 -   **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
 -   **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
 
-## My process
-
-### Built with
+## Built with
 
 -   CSS Flexbox
--   CSS Grid
 -   [React](https://reactjs.org/) - JS library
 -   [Vite](https://vitejs.dev/) - Frontend Tooling
 -   [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
