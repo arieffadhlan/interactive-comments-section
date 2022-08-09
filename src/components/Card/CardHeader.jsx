@@ -4,6 +4,7 @@ import CardButton from './CardButton';
 import amyrobson from '../../assets/images/avatars/image-amyrobson.webp';
 import maxblagun from '../../assets/images/avatars/image-maxblagun.webp';
 import ramsesmiron from '../../assets/images/avatars/image-ramsesmiron.webp';
+import juliusomo from '../../assets/images/avatars/image-juliusomo.webp';
 
 export default function CardHeader({
     comment,
@@ -22,6 +23,8 @@ export default function CardHeader({
             profilePic = maxblagun;
         } else if (user.username === 'ramsesmiron') {
             profilePic = ramsesmiron;
+        } else {
+            profilePic = juliusomo;
         }
 
         return (
